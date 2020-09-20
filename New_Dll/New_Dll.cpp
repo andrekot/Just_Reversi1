@@ -19,14 +19,14 @@ BOOL APIENTRY DllMain( HANDLE hModule,
     return TRUE;
 }
 
-bool turn;//если тру тогда ход белых
+bool turn;//РµСЃР»Рё С‚СЂСѓ С‚РѕРіРґР° С…РѕРґ Р±РµР»С‹С…
 int steps2[8];
 int steps[8];
 static B_turn Best;
 NEW_DLL_API B_turn best_t;
- //если фишка белая, функция возвращает yes
-three IfWhite(HWND hwnd,int id,HBITMAP hbtm,HBITMAP hbtm1,HBITMAP hbtm2){//проверяю черная фишка или белая
-//см. макрос IFWHITE
+ //РµСЃР»Рё С„РёС€РєР° Р±РµР»Р°В¤, С„СѓРЅРєС†РёВ¤ РІРѕР·РІСЂР°С‰Р°РµС‚ yes
+three IfWhite(HWND hwnd,int id,HBITMAP hbtm,HBITMAP hbtm1,HBITMAP hbtm2){//РїСЂРѕРІРµСЂВ¤СЋ С‡РµСЂРЅР°В¤ С„РёС€РєР° РёР»Рё Р±РµР»Р°В¤
+//СЃРј. РјР°РєСЂРѕСЃ IFWHITE
 LONG gethbtm;
 gethbtm=SendDlgItemMessage(hwnd,id,BM_GETIMAGE,IMAGE_BITMAP,NULL);
 LONG sethbtm1=(LONG)hbtm2;
@@ -38,15 +38,15 @@ LONG sethbtm=(LONG)hbtm1;
 	if (sethbtm2==gethbtm){ return (undefined);}
 
 }
-//в области ли id?
+//РІ РѕР±Р»Р°СЃС‚Рё Р»Рё id?
 bool IsOut(int id){
 	if ((id>=1063)&&(id<=1000)) {return(true);}
 	else return (false);
 }
 
 
-//Функция вставляет мои битмапы в кнопки 1-белая кнопка,2-черная
-//см. макросы WHITE_B BLACK_B
+//вЂСѓРЅРєС†РёВ¤ РІСЃС‚Р°РІР»В¤РµС‚ РјРѕРё Р±РёС‚РјР°РїС‹ РІ РєРЅРѕРїРєРё 1-Р±РµР»Р°В¤ РєРЅРѕРїРєР°,2-С‡РµСЂРЅР°В¤
+//СЃРј. РјР°РєСЂРѕСЃС‹ WHITE_B BLACK_B
 NEW_DLL_API void DrawBitmap(bool f,HWND hwnd,int id,HBITMAP hbtm1,HBITMAP hbtm2){
 
 	switch (f){
@@ -62,7 +62,7 @@ NEW_DLL_API void DrawBitmap(bool f,HWND hwnd,int id,HBITMAP hbtm1,HBITMAP hbtm2)
 
 };
 
-//вычисляем id по направлениям 
+//РІС‹С‡РёСЃР»В¤РµРј id РїРѕ РЅР°РїСЂР°РІР»РµРЅРёВ¤Рј 
 int local_id(int id,myways ways) {
 	int lid;
 	switch (ways){
@@ -79,8 +79,8 @@ int local_id(int id,myways ways) {
 	if (IsOut(lid)) {return (0);}
 	else return (lid);
 }
-//Рекурсивная функция считает сколько в одном направлении одного цвета кнопок
-//возвращает первую не закрашеную кнопку
+//вЂ“РµРєСѓСЂСЃРёРІРЅР°В¤ С„СѓРЅРєС†РёВ¤ СЃС‡РёС‚Р°РµС‚ СЃРєРѕР»СЊРєРѕ РІ РѕРґРЅРѕРј РЅР°РїСЂР°РІР»РµРЅРёРё РѕРґРЅРѕРіРѕ С†РІРµС‚Р° РєРЅРѕРїРѕРє
+//РІРѕР·РІСЂР°С‰Р°РµС‚ РїРµСЂРІСѓСЋ РЅРµ Р·Р°РєСЂР°С€РµРЅСѓСЋ РєРЅРѕРїРєСѓ
 int Recourse(HWND hwnd,int id,myways ways,HBITMAP hbtm,HBITMAP hbtm1,HBITMAP hbtm2){
 	id=local_id(id,ways);
 	three z=IFWHITE;
@@ -99,7 +99,7 @@ int Recourse2(HWND hwnd,int id,myways ways,HBITMAP hbtm,HBITMAP hbtm1,HBITMAP hb
 	else return (0);
 }
 
-//прорисовка хода
+//РїСЂРѕСЂРёСЃРѕРІРєР° С…РѕРґР°
 void PaintTurn(HWND hwnd,B_turn best_t,HBITMAP hbtm1,HBITMAP hbtm2){
 	int i=0,cid,id;bool f=false;
 	cid=best_t.id;
@@ -113,13 +113,13 @@ void PaintTurn(HWND hwnd,B_turn best_t,HBITMAP hbtm1,HBITMAP hbtm2){
 	}
 
 }
-// переворачивание фишек
+// РїРµСЂРµРІРѕСЂР°С‡РёРІР°РЅРёРµ С„РёС€РµРє
 void GetNextStep(int* step,HWND hwnd,int id,HBITMAP hbtm,HBITMAP hbtm1,HBITMAP hbtm2){
  	myways w;three z1,z2;
 	int* step1;
 	z2=IFWHITE;
 	int cid=id;
-	for (int i=1;i<=8;i++){//8 направлений
+	for (int i=1;i<=8;i++){//8 РЅР°РїСЂР°РІР»РµРЅРёР№
 		step1=step;
 		w=(myways)i;
 		id=local_id(cid,w);
@@ -134,7 +134,7 @@ void GetNextStep(int* step,HWND hwnd,int id,HBITMAP hbtm,HBITMAP hbtm1,HBITMAP h
 	}
 
 }
-//функция определяет критические точки на сторонах
+//С„СѓРЅРєС†РёВ¤ РѕРїСЂРµРґРµР»В¤РµС‚ РєСЂРёС‚РёС‡РµСЃРєРёРµ С‚РѕС‡РєРё РЅР° СЃС‚РѕСЂРѕРЅР°С…
 myways Region(int id)
 {
 	myways cid=net,rid=net;	
@@ -166,7 +166,7 @@ myways Region(int id)
 	return rid;
 }
 
-//определяю не выходит ли за границы ход?
+//РѕРїСЂРµРґРµР»В¤СЋ РЅРµ РІС‹С…РѕРґРёС‚ Р»Рё Р·Р° РіСЂР°РЅРёС†С‹ С…РѕРґ?
 bool InRegion(B_turn best_t){
 	int rid,cid,local;
 	if ((best_t.step<1000)|(best_t.step>1063)){return false;}
@@ -211,7 +211,7 @@ bool InRegion(B_turn best_t){
 	if (local==best_t.step){j=8;}
 	}
 return true;}
-// переворачивание фишек
+// РїРµСЂРµРІРѕСЂР°С‡РёРІР°РЅРёРµ С„РёС€РµРє
 bool Forcing(HWND hwnd,B_turn best_t,HBITMAP hbtm,HBITMAP hbtm1,HBITMAP hbtm2)
 {	
 	int id,id1;B_turn c_turn;three z;
@@ -279,9 +279,9 @@ return flag1;
 B_turn AnalyseTurn(HWND hwnd,int id,int* step2,bool flag,HBITMAP hbtm,HBITMAP hbtm1,HBITMAP hbtm2){
 	int* step1=step2;
 	if (flag==true){Best.pr=none;Best.step=0;Best.id=0;
-	Best.way=0;//сброс лучшего хода для другой кнопки
+	Best.way=0;//СЃР±СЂРѕСЃ Р»СѓС‡С€РµРіРѕ С…РѕРґР° РґР»В¤ РґСЂСѓРіРѕР№ РєРЅРѕРїРєРё
 	return Best;}
-	priority pr;//уровень приоритета
+	priority pr;//СѓСЂРѕРІРµРЅСЊ РїСЂРёРѕСЂРёС‚РµС‚Р°
 	three color;
 	for (int i=1;i<=8;i++) {
 		step1=step2+i-1;
@@ -323,7 +323,7 @@ B_turn AnalyseTurn(HWND hwnd,int id,int* step2,bool flag,HBITMAP hbtm,HBITMAP hb
 return Best;
 }
 NEW_DLL_API void Comp_turn(HWND hwnd,HBITMAP hbtm,HBITMAP hbtm1,HBITMAP hbtm2) {
-	// функция - ход компьютера
+	// С„СѓРЅРєС†РёВ¤ - С…РѕРґ РєРѕРјРїСЊСЋС‚РµСЂР°
 	turn=false;
 		B_turn curr_t;int id;three color;
 		best_t.pr=none;
@@ -355,7 +355,7 @@ NEW_DLL_API void Comp_turn(HWND hwnd,HBITMAP hbtm,HBITMAP hbtm1,HBITMAP hbtm2) {
 		Forcing(hwnd,best_t,hbtm,hbtm1,hbtm2);}
 
 		}
-//Функция сохранения игры
+//вЂСѓРЅРєС†РёВ¤ СЃРѕС…СЂР°РЅРµРЅРёВ¤ РёРіСЂС‹
 NEW_DLL_API void Save(HWND hwnd,HBITMAP hbtm,HBITMAP hbtm1,HBITMAP hbtm2){
 	HANDLE hfile=CreateFile("Just_Reversi.dat",GENERIC_READ|GENERIC_WRITE,FILE_SHARE_READ|
 			FILE_SHARE_WRITE,NULL,CREATE_ALWAYS,FILE_ATTRIBUTE_NORMAL,NULL);
@@ -370,7 +370,7 @@ NEW_DLL_API void Save(HWND hwnd,HBITMAP hbtm,HBITMAP hbtm1,HBITMAP hbtm2){
 		CloseHandle(FMAP);
 		
 }
-//функция загрузки игры
+//С„СѓРЅРєС†РёВ¤ Р·Р°РіСЂСѓР·РєРё РёРіСЂС‹
 NEW_DLL_API void Load(HWND hwnd,HBITMAP hbtm,HBITMAP hbtm1,HBITMAP hbtm2)
 {
 	HANDLE hfile=CreateFile("Just_Reversi.dat",GENERIC_READ|GENERIC_WRITE,FILE_SHARE_READ|

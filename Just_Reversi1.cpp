@@ -11,7 +11,7 @@ HBITMAP hbtm1;
 HBITMAP hbtm2;
 HANDLE thread, Even;
 bool End=false;
-bool turn1=true;//если тру тогда ход белых
+bool turn1=true;//РµСЃР»Рё С‚СЂСѓ С‚РѕРіРґР° С…РѕРґ Р±РµР»С‹С…
 
 class Fishka {
 public:
@@ -107,7 +107,7 @@ SetDlgItemInt(hwnd,IDC_EDIT1,2,NULL);
 SetDlgItemInt(hwnd,IDC_EDIT2,2,NULL);
 }
 
-//Функция потока
+//Р¤СѓРЅРєС†РёСЏ РїРѕС‚РѕРєР°
 unsigned int Thread1(PVOID pvParam){
 bool f=false,fz;LONG gethbtm;
 DWORD black=0,white=0,neutral=0;three z;
@@ -150,10 +150,10 @@ SetDlgItemInt((HWND)pvParam,IDC_EDIT2,black,NULL);
 if ((neutral==0)|(fz==false)){End=true;}
 if (End==true)	{
 	
-	if (white>black){MessageBox((HWND)pvParam,"ВЫ ВЫИГРАЛИ!","РЕВЕРСИ",MB_OK);}
+	if (white>black){MessageBox((HWND)pvParam,"Р’Р« Р’Р«РР“Р РђР›Р!","Р Р•Р’Р•Р РЎР",MB_OK);}
 	else {
-	if (black>white){MessageBox((HWND)pvParam,"ВЫ ПРОИГРАЛИ!","РЕВЕРСИ",MB_OK);}
-	else {MessageBox((HWND)pvParam,"НИЧЬЯ!","РЕВЕРСИ",MB_OK);}
+	if (black>white){MessageBox((HWND)pvParam,"Р’Р« РџР РћРР“Р РђР›Р!","Р Р•Р’Р•Р РЎР",MB_OK);}
+	else {MessageBox((HWND)pvParam,"РќРР§Р¬РЇ!","Р Р•Р’Р•Р РЎР",MB_OK);}
 
 	}
 Start((HWND) pvParam);
@@ -171,7 +171,7 @@ bool InitDialog(HWND hwnd){
   hbtm1=LoadBitmap((HINSTANCE)hInst,MAKEINTRESOURCE(IDB_BITMAP4));
   hbtm2=LoadBitmap((HINSTANCE)hInst,MAKEINTRESOURCE(IDB_BITMAP5));
   DWORD q;
-	thread=chBEGINTHREADEX(NULL,NULL,Thread1,hwnd,0,&q);//старт потока
+	thread=chBEGINTHREADEX(NULL,NULL,Thread1,hwnd,0,&q);//СЃС‚Р°СЂС‚ РїРѕС‚РѕРєР°
 	Even=CreateEvent(NULL,false,false,false);
   Start(hwnd);
  
@@ -195,7 +195,7 @@ void Dlg_OnCommand(HWND hwnd, int id, HWND hwndCtl, UINT codeNotify) {
 	case 0:
 		break;
 	case IDC_ABOUT:
-		MessageBox(hwnd,"Программа написана Мартынец Андреем. Краснодар2003. andrews-answer@narod.ru","О программе",MB_OK);
+		MessageBox(hwnd,"РџСЂРѕРіСЂР°РјРјР° РЅР°РїРёСЃР°РЅР° РњР°СЂС‚С‹РЅРµС† РђРЅРґСЂРµРµРј. РљСЂР°СЃРЅРѕРґР°СЂ2003. andrews-answer@narod.ru","Рћ РїСЂРѕРіСЂР°РјРјРµ",MB_OK);
 		
 		break;
 	case IDC_SAVE:
