@@ -5,7 +5,7 @@
 #include "resource.h"
 #include "windowsx.h"
 #include "process.h"
-#include "C:\MyProjects\NEW_Dll\NEW_Dll.h"
+#include "\NEW_Dll\NEW_Dll.h"
 HBITMAP hbtm;
 HBITMAP hbtm1;
 HBITMAP hbtm2;
